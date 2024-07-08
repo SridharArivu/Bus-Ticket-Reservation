@@ -47,6 +47,7 @@
     align-items: center;
     justify-content: center;
     margin: 2vh;
+    user-select: none;
     border: 2px solid #AAAAB6;
     position: relative;
     font-family: "Poppins",sans-serif;
@@ -101,4 +102,5 @@
     height: fit-content;
     margin-right: 3vh;
     margin-top: -1.6vh;
+    user-select: none;
 }

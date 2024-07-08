@@ -1,6 +1,7 @@
 import React from "react";
 import "./BusDetailsCard.css";
 import { useNavigate } from "react-router-dom";
+import calculateTimeDifference from "./calculateTimeDifference";
 
 const BusDetailsCard = ({item,date}) => {
 
@@ -23,6 +24,11 @@ const BusDetailsCard = ({item,date}) => {
     navigate(`/booking?${searchParams.toString()}`);
   };
 
+  const departureTime = item?.departureTime;
+  const arrivalTime = item?.arrivalTime;
+
+  const hoursDifference = calculateTimeDifference(departureTime, arrivalTime);
+
   return (
     <div className="BusDetailsCard_wrapper">
       <div className="Bus_info_wrapper">
@@ -38,7 +44,7 @@ const BusDetailsCard = ({item,date}) => {
               {item?.departureTime} <span className="A_D_Dates">May 20</span>
             </h3>
           </div>
-          <p style={{fontSize:'1.8vh'}}> ――― 6h 10m ―――</p>
+          <p style={{fontSize:'1.8vh'}}> ――― {hoursDifference + "Hrs"} ―――</p>
           <div>
             <p>{item?.destination}</p>
             <h3>

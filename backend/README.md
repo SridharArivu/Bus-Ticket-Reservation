@@ -14,6 +14,8 @@
     MONGO_USER="sridhar353"
     MONGO_PASS="IzLbVuag6GdvnBoE"
     MONGO_CLUSTER="cluster0.enum13t.mongodb.net"
+    rzp_key_id ="rzp_test_SYxQKFMJrZMFd7"
+    rzp_key_secret ="ewHKZBdQ05OgfyKRlWkIzEVP"
     ```
     or use any MongoDB database credentials.
 4. Run the main file as a Spring application to run the backend.

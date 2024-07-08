@@ -3,7 +3,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 
-const BASE_URL = 'http://localhost:8080';
+// const BASE_URL = 'http://localhost:8080';
+const BASE_URL = 'https://orbital-nuance-403709.el.r.appspot.com';
 
 export const login = createAsyncThunk('auth/login', async (credentials, thunkAPI) => {
   try {

@@ -29,12 +29,70 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private UserBookingsRepo userBookingsRepo;
+//    @Override
+//    public ReservationResponse reserveBooking(String userEmail, RequestBooking request) {
+//        Bookings bookings = bookingRepo.findByBusIdAndDate(request.getBusId(), request.getDate());
+//
+//        Integer BookingId = null;
+//        ReservationResponse response = null;
+//
+//        if (bookings != null) {
+//            bookings.setBookedSeats(request.getBookedSeats());
+//            bookingRepo.save(bookings);
+//        } else {
+//            SecureRandom random = new SecureRandom();
+//
+//            Bookings newBooking = new Bookings();
+//            BookingId = 100000 + random.nextInt(900000);
+//            newBooking.setBusId(request.getBusId());
+//            newBooking.setBookedSeats(request.getBookedSeats());
+//            newBooking.setDate(request.getDate());
+//            newBooking.setBookingId(BookingId);
+//            bookingRepo.save(newBooking);
+//        }
+//        Bookings existingBooking = bookingRepo.findByBusIdAndDate(request.getBusId(), request.getDate());
+//        Bus bus = busRepository.findByIdAndSourceAndDestination(request.getBusId(), request.getSource(), request.getDestination());
+//
+//        UserBookings existingUserBooking = userBookingsRepo.findByBookingId(existingBooking.getBookingId());
+//        if (existingUserBooking != null) {
+//            existingUserBooking.setReservedSeats(request.getBookedSeats());
+//            existingUserBooking.setTotalPrice(existingUserBooking.getTotalPrice() + request.getBookedSeats().size() * bus.getPrice());
+//
+//            userBookingsRepo.save(existingUserBooking);
+//            response = new ReservationResponse();
+//
+//            response.setDate(request.getDate());
+//            response.setBookingID(existingUserBooking.getBookingId());
+//            response.setSubtotal(request.getBookedSeats().size() * bus.getPrice());
+//            response.setTotal(request.getBookedSeats().size() * bus.getPrice());
+//        } else {
+//        UserBookings userBookings = new UserBookings();
+//        userBookings.setEmail(userEmail);
+//        modelMapper.map(bus, userBookings);
+//        userBookings.setTotalPrice(bus.getPrice() * request.getBookedSeats().size());
+//        modelMapper.map(existingBooking, userBookings);
+//
+//        userBookings.setReservedSeats(request.getBookedSeats());
+//        userBookings.setTotalPrice(request.getBookedSeats().size() * bus.getPrice());
+//
+//        userBookingsRepo.save(userBookings);
+//
+//            response = new ReservationResponse();
+//            response.setDate(request.getDate());
+//            response.setBookingID(userBookings.getBookingId());
+//            response.setSubtotal(request.getBookedSeats().size() * bus.getPrice());
+//            response.setTotal(request.getBookedSeats().size() * bus.getPrice());
+//        }
+//        return response;
+//    }
+
+
     @Override
     public ReservationResponse reserveBooking(String userEmail, RequestBooking request) {
         Bookings bookings = bookingRepo.findByBusIdAndDate(request.getBusId(), request.getDate());
 
-        Integer BookingId = null;
-        ReservationResponse response = null;
+        Integer bookingId = null;
+        ReservationResponse response = new ReservationResponse();
 
         if (bookings != null) {
             bookings.setBookedSeats(request.getBookedSeats());
@@ -43,13 +101,14 @@ public class BookingServiceImpl implements BookingService {
             SecureRandom random = new SecureRandom();
 
             Bookings newBooking = new Bookings();
-            BookingId = 100000 + random.nextInt(900000);
+            bookingId = 100000 + random.nextInt(900000);
             newBooking.setBusId(request.getBusId());
             newBooking.setBookedSeats(request.getBookedSeats());
             newBooking.setDate(request.getDate());
-            newBooking.setBookingId(BookingId);
+            newBooking.setBookingId(bookingId);
             bookingRepo.save(newBooking);
         }
+
         Bookings existingBooking = bookingRepo.findByBusIdAndDate(request.getBusId(), request.getDate());
         Bus bus = busRepository.findByIdAndSourceAndDestination(request.getBusId(), request.getSource(), request.getDestination());
 
@@ -59,33 +118,29 @@ public class BookingServiceImpl implements BookingService {
             existingUserBooking.setTotalPrice(existingUserBooking.getTotalPrice() + request.getBookedSeats().size() * bus.getPrice());
 
             userBookingsRepo.save(existingUserBooking);
-            response = new ReservationResponse();
 
-            response.setDate(request.getDate());
             response.setBookingID(existingUserBooking.getBookingId());
-            response.setSubtotal(request.getBookedSeats().size() * bus.getPrice());
-            response.setTotal(request.getBookedSeats().size() * bus.getPrice());
         } else {
-        UserBookings userBookings = new UserBookings();
-        userBookings.setEmail(userEmail);
-        modelMapper.map(bus, userBookings);
-        userBookings.setTotalPrice(bus.getPrice() * request.getBookedSeats().size());
-        modelMapper.map(existingBooking, userBookings);
+            UserBookings userBookings = new UserBookings();
+            userBookings.setEmail(userEmail);
+            modelMapper.map(bus, userBookings);
+            userBookings.setTotalPrice(bus.getPrice() * request.getBookedSeats().size());
+            modelMapper.map(existingBooking, userBookings);
 
-        userBookings.setReservedSeats(request.getBookedSeats());
-        userBookings.setTotalPrice(request.getBookedSeats().size() * bus.getPrice());
+            userBookings.setReservedSeats(request.getBookedSeats());
+            userBookings.setTotalPrice(request.getBookedSeats().size() * bus.getPrice());
 
-        userBookingsRepo.save(userBookings);
+            userBookingsRepo.save(userBookings);
 
-            response = new ReservationResponse();
-            response.setDate(request.getDate());
             response.setBookingID(userBookings.getBookingId());
-            response.setSubtotal(request.getBookedSeats().size() * bus.getPrice());
-            response.setTotal(request.getBookedSeats().size() * bus.getPrice());
         }
+
+        response.setDate(request.getDate());
+        response.setSubtotal(request.getBookedSeats().size() * bus.getPrice());
+        response.setTotal(request.getBookedSeats().size() * bus.getPrice());
+
         return response;
     }
-
     @Override
     public Integer getTotalPrice(RequestBooking request) {
         Bus bus = busRepository.findByIdAndSourceAndDestination(request.getBusId(), request.getSource(), request.getDestination());

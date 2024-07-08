@@ -43,12 +43,7 @@ const Navbar = ({searchState,setSearchState,setShowLogin}) => {
     });
     
     navigate(`/search?${searchParams.toString()}`);
-    setSearchState((prev) => ({
-      ...prev,
-      from:source,
-      to:destination,
-      date: date,
-    }))
+    
   };
   useEffect(() =>{
     const formattedValue = value?.format('YYYY-MM-DD');
@@ -58,7 +53,16 @@ const Navbar = ({searchState,setSearchState,setShowLogin}) => {
      }))
    },[value])
 
-   
+  useEffect(() =>{
+    setSearchState((prev) => ({
+      ...prev,
+      from:source,
+      to:destination,
+      date: date,
+    }))
+  },[])
+
+  
 
   return (
     <>
