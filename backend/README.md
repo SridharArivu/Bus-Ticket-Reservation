@@ -2,7 +2,7 @@
 # Online Bus Ticket Booking Application
 
 ## Live Link
-[Leave space for me to place the link]
+[https://journey-journals.netlify.app/search?source=Madurai&destination=Trichy&availableDate=2024-07-15]
 
 ## Setup/Configuration
 
@@ -10,12 +10,12 @@
 2. Inside `src/main/resources`, create a file named `.env`.
 3. Put the following information inside that file:
     ```
-    MONGO_DATABASE="capstone"
-    MONGO_USER="sridhar353"
-    MONGO_PASS="IzLbVuag6GdvnBoE"
-    MONGO_CLUSTER="cluster0.enum13t.mongodb.net"
-    rzp_key_id ="rzp_test_SYxQKFMJrZMFd7"
-    rzp_key_secret ="ewHKZBdQ05OgfyKRlWkIzEVP"
+    MONGO_DATABASE="DB_Name"
+    MONGO_USER="Username"
+    MONGO_PASS="password"
+    MONGO_CLUSTER="cluster_ID"
+    rzp_key_id ="razorpay_ID"
+    rzp_key_secret ="razorpay_Secret"
     ```
     or use any MongoDB database credentials.
 4. Run the main file as a Spring application to run the backend.
